@@ -1,0 +1,183 @@
+/* ==========================================================================
+     TODAS AS CORES DE TEXTO E FUNDO SÃO DEFINIDAS AQUI, EM CSS PURO, COM
+     ALTA ESPECIFICIDADE — garante contraste correto sob luz do sol,
+     independente de classes utilitárias do Tailwind.
+     ========================================================================== */
+:root{
+    --bg: #121214;
+    --card: #202024;
+    --card-2: #17171a;
+    --input-bg: #0c0c0e;
+    --line: #3f3f46;
+    --line-light: #71717a;
+    --amber: #f5a623;
+    --amber-2: #ff8a00;
+    --text-primary: #ffffff;
+    --text-secondary: #e4e4e7;
+    --text-muted: #a1a1aa;
+    --green: #22c55e;
+    --red: #f87171;
+  }
+
+  html, body{
+    background: var(--bg);
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+  }
+  .font-dash{ font-family: 'Rajdhani', sans-serif; }
+
+  .road-divider{
+    height: 3px;
+    background-image: repeating-linear-gradient(90deg, var(--amber) 0 18px, transparent 18px 32px);
+    opacity: .6;
+  }
+
+  .app-title{ color: var(--text-primary); }
+  .app-subtitle{ color: var(--text-muted); }
+  .section-eyebrow{ color: var(--text-muted); }
+
+  /* ---------- LABELS: sempre branco / cinza bem claro ---------- */
+  .field-label{
+    color: var(--text-primary) !important;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .field-label i{ color: var(--amber); }
+  .field-label-sm{
+    color: var(--text-secondary) !important;
+    font-size: 0.78rem;
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+    display: block;
+  }
+
+  .card{ background: var(--card); border: 1px solid var(--line); border-radius: 1rem; }
+  .card-inset{ background: var(--card-2); border: 1px solid var(--line); border-radius: 0.85rem; }
+
+  /* ---------- INPUTS: fundo escuro, texto SEMPRE branco, grande ---------- */
+  .input-field{
+    background: var(--input-bg);
+    border: 1px solid var(--line);
+    color: var(--text-primary) !important;
+    caret-color: var(--amber);
+    font-size: 1.125rem;
+    font-weight: 600;
+    width: 100%;
+    border-radius: 0.75rem;
+    padding: 0.9rem 1rem;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  .input-field::placeholder{ color: #6b6b73; font-weight: 400; }
+  .input-field:focus{
+    outline: none;
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px rgba(245,166,35,.2);
+  }
+  .input-field-sm{ font-size: 0.92rem; font-weight: 500; padding: 0.65rem 0.9rem; }
+  input[type="number"]{ -moz-appearance: textfield; }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance: none; margin: 0; }
+
+  /* ---------- ABAS DE VEÍCULO (principais) ---------- */
+  .tab-btn{
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.35rem; padding: 0.9rem 0.5rem; border-radius: 0.85rem;
+    font-weight: 700; font-size: 0.9rem; transition: all .18s ease;
+    background: var(--card-2); border: 1.5px solid var(--line-light); color: var(--text-primary);
+  }
+  .tab-btn i{ font-size: 1.15rem; color: var(--text-secondary); }
+  .tab-btn.active{
+    background: linear-gradient(180deg, var(--amber) 0%, var(--amber-2) 100%);
+    border-color: transparent; color: #14140f; box-shadow: 0 4px 14px rgba(245,166,35,.3);
+  }
+  .tab-btn.active i{ color: #14140f; }
+
+  /* ---------- SUB-ABAS (Carro: Gasolina/Flex vs GNV) ---------- */
+  .subtab-wrap{
+    max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height .25s ease, opacity .2s ease, margin-top .25s ease;
+  }
+  .subtab-wrap.open{ max-height: 100px; opacity: 1; margin-top: 0.75rem; }
+  .sub-tab-btn{
+    flex: 1; text-align: center; padding: 0.6rem 0.5rem; border-radius: 0.65rem;
+    font-weight: 700; font-size: 0.82rem; color: var(--text-secondary);
+    background: var(--input-bg); border: 1.5px solid var(--line);
+    transition: all .15s ease;
+  }
+  .sub-tab-btn.active{
+    background: rgba(245,166,35,.16); border-color: var(--amber); color: var(--amber);
+  }
+
+  /* ---------- BOTÃO PRINCIPAL "CALCULAR" ---------- */
+  .btn-calc{
+    background: linear-gradient(180deg, var(--amber) 0%, var(--amber-2) 100%);
+    color: #14140f; font-weight: 800; box-shadow: 0 6px 18px rgba(255,138,0,.3); border: none;
+  }
+  .btn-calc:active{ transform: translateY(1px); }
+
+  /* ---------- ACCORDION "ABRIR O CAPÔ" ---------- */
+  .accordion-toggle{ background: var(--card-2); color: var(--text-primary); font-weight: 700; font-size: 0.92rem; }
+  .accordion-body{ max-height: 0; overflow: hidden; transition: max-height .3s ease; background: var(--card); }
+  .accordion-body.open{ max-height: 700px; }
+  .accordion-hint{ color: var(--text-muted); font-size: 0.78rem; }
+  .chevron{ transition: transform .25s ease; color: var(--text-muted); }
+  .chevron.rot{ transform: rotate(180deg); }
+
+  /* ---------- PAINEL DE RESULTADOS ---------- */
+  .result-row{ display: flex; align-items: center; justify-content: space-between; }
+  .result-row-label{ color: var(--text-secondary); font-size: 0.92rem; display: flex; align-items: center; gap: 0.5rem; }
+  .result-row-value{ color: var(--text-primary); font-weight: 700; }
+  .indicator-label{ color: var(--text-muted); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; margin-bottom: 0.35rem; }
+
+  .gauge{
+    width: 220px; height: 220px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; position: relative;
+    background: conic-gradient(var(--gauge-color, var(--amber)) calc(var(--gauge-pct, 0) * 1%), var(--card-2) 0);
+  }
+  .gauge::before{
+    content: ""; position: absolute; width: 178px; height: 178px; border-radius: 50%;
+    background: var(--card); border: 1px solid var(--line);
+  }
+  .gauge-inner{ position: relative; z-index: 1; text-align: center; }
+  .gauge-label{ color: var(--text-muted); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+  .gauge-value{ color: var(--text-primary); font-size: 1.85rem; font-weight: 700; }
+
+  /* ---------- CARD DE ALERTA DE META ---------- */
+  .alert-card{
+    background: rgba(248,113,113,.12);
+    border: 1.5px solid var(--red);
+    border-radius: 0.9rem;
+    color: #fecaca;
+    font-weight: 600;
+    font-size: 0.92rem;
+    line-height: 1.4;
+  }
+  .goal-ok-card{
+    background: rgba(34,197,94,.12);
+    border: 1.5px solid var(--green);
+    border-radius: 0.9rem;
+    color: #bbf7d0;
+    font-weight: 600;
+    font-size: 0.92rem;
+    line-height: 1.4;
+  }
+
+  /* ---------- CARD DE AFILIADOS ---------- */
+  .affiliate-card{
+    background: linear-gradient(120deg, var(--amber) 0%, var(--amber-2) 100%);
+    color: #14140f; border-radius: 1rem; box-shadow: 0 8px 22px rgba(255,138,0,.25);
+  }
+  .affiliate-card p{ color: #14140f; font-weight: 700; }
+  .affiliate-card span{ color: #14140f; font-weight: 800; }
+
+  /* Corrigido: Removido o opacity inicial do fadeUp para evitar falha estática no mobile */
+  .pulse-once{ animation: fadeUp .4s ease; }
+  @keyframes fadeUp{ from{ transform: translateY(8px);} to{ transform: translateY(0);} }
+
+  @media (prefers-reduced-motion: reduce){ *{ animation: none !important; transition: none !important; } }
