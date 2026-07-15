@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.lucro.real",
+        "sha256_cert_fingerprints": ["2E:90:2D:31:43:13:16:92:31:15:69:A2:1D:E0:78:E8:7E:9A:BD:AF:5D:3B:EE:B1:F6:CB:D8:57:5F:37:9E:8F"]
+      }
+    }]
