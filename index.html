@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadora do Lucro Real</title>
+<!-- PWA: manifest + ícones + cor de tema (necessário para instalar e para empacotar via PWABuilder) -->
+<link rel="manifest" href="manifest.json">
 
 <!-- Tailwind CSS via CDN (layout: grid, flex, espaçamento, bordas) -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -77,12 +79,11 @@
 
       <div class="grid grid-cols-2 gap-4">
         <div>
-          <!-- Tags <span> internas adicionadas para isolar o texto dos ícones -->
-          <label class="field-label"><i class="fas fa-gas-pump"></i> <span id="labelConsumoText">Consumo Médio (KM/L)</span></label>
+          <label class="field-label" id="labelConsumo"><i class="fas fa-gas-pump"></i> Consumo Médio (KM/L)</label>
           <input type="number" id="consumo" inputmode="decimal" class="input-field">
         </div>
         <div>
-          <label class="field-label"><i class="fas fa-coins"></i> <span id="labelPrecoText">Preço do Litro do Combustível (R$)</span></label>
+          <label class="field-label" id="labelPreco"><i class="fas fa-coins"></i> Preço do Litro do Combustível (R$)</label>
           <input type="number" id="precoUnidade" inputmode="decimal" placeholder="Ex: 5.89" class="input-field">
         </div>
       </div>
@@ -183,5 +184,14 @@
   </footer>
 
 <script src="script.js"></script>
+
+<!-- Registra o Service Worker para funcionamento offline e instalação como app -->
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("service-worker.js").catch(console.error);
+    });
+  }
+</script>
 </body>
 </html>
