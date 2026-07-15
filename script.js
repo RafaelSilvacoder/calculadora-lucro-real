@@ -140,30 +140,40 @@
   /* --------------------------------------------------------------------------
      applyProfile: aplica o perfil ativo em toda a interface
      -------------------------------------------------------------------------- */
-  function applyProfile() {
-    const cfg = PROFILES[getActiveProfileKey()];
-  
-    // Mudança cirúrgica: Atualiza apenas as strings dos spans sem quebrar os nós do ícone
-   el.labelConsumo.lastChild.textContent = " " + cfg.consumoLabel;
-    el.consumo.value = cfg.consumoDefault;
-    el.labelPreco.lastChild.textContent = " " + cfg.precoLabel;
-    el.precoUnidade.placeholder = cfg.precoPlaceholder;
-  
-    el.custoOleo.value = cfg.custos.oleo;
-    el.custoPneus.value = cfg.custos.pneus;
-    el.custoMecanica.value = cfg.custos.mecanica;
-    el.custoTaxas.value = cfg.custos.taxas;
-  
-    el.labelOleo.textContent = cfg.custoLabels.oleo;
-    el.labelPneus.textContent = cfg.custoLabels.pneus;
-    el.labelMecanica.textContent = cfg.custoLabels.mecanica;
-    el.labelTaxas.textContent = cfg.custoLabels.taxas;
-  
-    el.labelGastoEnergia.innerHTML =
-      '<i class="fas fa-gas-pump" style="color:var(--amber);"></i> ' + cfg.gastoEnergiaLabel;
-  
-    el.resultsPanel.classList.add("hidden");
+  /* --------------------------------------------------------------------------
+   applyProfile: aplica o perfil ativo em toda a interface
+   -------------------------------------------------------------------------- */
+function applyProfile() {
+  const cfg = PROFILES[getActiveProfileKey()];
+
+  // Correção aqui: trocado 'labelConsumo' por 'labelConsumoText' e 'labelPreco' por 'labelPrecoText'
+  if (el.labelConsumoText && el.labelConsumoText.lastChild) {
+    el.labelConsumoText.lastChild.textContent = " " + cfg.consumoLabel;
   }
+  
+  el.consumo.value = cfg.consumoDefault;
+  
+  if (el.labelPrecoText && el.labelPrecoText.lastChild) {
+    el.labelPrecoText.lastChild.textContent = " " + cfg.precoLabel;
+  }
+  
+  el.precoUnidade.placeholder = cfg.precoPlaceholder;
+
+  el.custoOleo.value = cfg.custos.oleo;
+  el.custoPneus.value = cfg.custos.pneus;
+  el.custoMecanica.value = cfg.custos.mecanica;
+  el.custoTaxas.value = cfg.custos.taxas;
+
+  el.labelOleo.textContent = cfg.custoLabels.oleo;
+  el.labelPneus.textContent = cfg.custoLabels.pneus;
+  el.labelMecanica.textContent = cfg.custoLabels.mecanica;
+  el.labelTaxas.textContent = cfg.custoLabels.taxas;
+
+  el.labelGastoEnergia.innerHTML =
+    '<i class="fas fa-gas-pump" style="color:var(--amber);"></i> ' + cfg.gastoEnergiaLabel;
+
+  el.resultsPanel.classList.add("hidden");
+}
   
   /* --------------------------------------------------------------------------
      Alterna a aba visual ativa entre os botões de veículo principal
