@@ -143,10 +143,13 @@
   /* --------------------------------------------------------------------------
    applyProfile: aplica o perfil ativo em toda a interface
    -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   applyProfile: aplica o perfil ativo em toda a interface
+   -------------------------------------------------------------------------- */
 function applyProfile() {
   const cfg = PROFILES[getActiveProfileKey()];
 
-  // Correção aqui: trocado 'labelConsumo' por 'labelConsumoText' e 'labelPreco' por 'labelPrecoText'
+  // Correção: Atualiza os textos usando labelConsumoText e labelPrecoText com segurança
   if (el.labelConsumoText && el.labelConsumoText.lastChild) {
     el.labelConsumoText.lastChild.textContent = " " + cfg.consumoLabel;
   }
@@ -159,11 +162,13 @@ function applyProfile() {
   
   el.precoUnidade.placeholder = cfg.precoPlaceholder;
 
+  // Preenche as caixas de custos ocultos com os valores predefinidos do perfil
   el.custoOleo.value = cfg.custos.oleo;
   el.custoPneus.value = cfg.custos.pneus;
   el.custoMecanica.value = cfg.custos.mecanica;
   el.custoTaxas.value = cfg.custos.taxas;
 
+  // Atualiza as labels dos custos
   el.labelOleo.textContent = cfg.custoLabels.oleo;
   el.labelPneus.textContent = cfg.custoLabels.pneus;
   el.labelMecanica.textContent = cfg.custoLabels.mecanica;
@@ -174,26 +179,6 @@ function applyProfile() {
 
   el.resultsPanel.classList.add("hidden");
 }
-  
-  /* --------------------------------------------------------------------------
-     Alterna a aba visual ativa entre os botões de veículo principal
-     -------------------------------------------------------------------------- */
-  el.tabs.forEach(btn => {
-    btn.addEventListener("click", () => {
-      el.tabs.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      currentVehicle = btn.dataset.vehicle;
-  
-      if (currentVehicle === "carro") {
-        el.carroSubtabs.classList.add("open");
-      } else {
-        el.carroSubtabs.classList.remove("open");
-      }
-  
-      applyProfile();
-    });
-  });
-  
   /* --------------------------------------------------------------------------
      Alterna entre Gasolina/Flex e GNV
      -------------------------------------------------------------------------- */
