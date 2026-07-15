@@ -144,9 +144,9 @@
     const cfg = PROFILES[getActiveProfileKey()];
   
     // Mudança cirúrgica: Atualiza apenas as strings dos spans sem quebrar os nós do ícone
-    el.labelConsumoText.textContent = cfg.consumoLabel;
+   el.labelConsumo.lastChild.textContent = " " + cfg.consumoLabel;
     el.consumo.value = cfg.consumoDefault;
-    el.labelPrecoText.textContent = cfg.precoLabel;
+    el.labelPreco.lastChild.textContent = " " + cfg.precoLabel;
     el.precoUnidade.placeholder = cfg.precoPlaceholder;
   
     el.custoOleo.value = cfg.custos.oleo;
