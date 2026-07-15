@@ -1,4 +1,5 @@
 {
+  "id": "br.rafaelsilvacoder.lucroreal",
   "name": "Calculadora do Lucro Real",
   "short_name": "Lucro Real",
   "description": "Calcule o lucro líquido real do seu dia de trabalho como motoboy, entregador ou motorista de app, descontando combustível, energia e manutenção oculta por KM rodado.",
