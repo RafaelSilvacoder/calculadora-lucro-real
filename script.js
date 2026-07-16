@@ -11,12 +11,11 @@
       precoLabel: "Preço do Litro do Combustível (R$)",
       precoPlaceholder: "Ex: 5.89",
       gastoEnergiaLabel: "Gasto com combustível",
-      custos: { oleo: 0.04, pneus: 0.02, mecanica: 0.012, taxas: 0.02 },
+      custos: { oleo: 0.04, pneus: 0.02, mecanica: 0.012 },
       custoLabels: {
         oleo: "Óleo / Filtro (R$/km)",
         pneus: "Pneus (R$/km)",
-        mecanica: "Relação / Mecânica (R$/km)",
-        taxas: "Taxas / IPVA / Seguro (R$/km)"
+        mecanica: "Relação / Mecânica (R$/km)"
       },
       affiliateText: "🔧 Hora de dar aquela geral na máquina? Confira motopeças em promoção na Shopee com desconto →",
       affiliateLink: "https://s.shopee.com.br/40epImbWXq"
@@ -27,12 +26,11 @@
       precoLabel: "Preço do Litro do Combustível (R$)",
       precoPlaceholder: "Ex: 5.89",
       gastoEnergiaLabel: "Gasto com combustível",
-      custos: { oleo: 0.025, pneus: 0.035, mecanica: 0.06, taxas: 0.08 },
+      custos: { oleo: 0.025, pneus: 0.035, mecanica: 0.06 },
       custoLabels: {
         oleo: "Óleo / Filtro (R$/km)",
         pneus: "Pneus (R$/km)",
-        mecanica: "Mecânica Geral (freios, suspensão, correias) (R$/km)",
-        taxas: "Taxas / IPVA / Seguro (R$/km)"
+        mecanica: "Mecânica Geral (freios, suspensão, correias) (R$/km)"
       },
       affiliateText: "🚗 Precisando de peças, ferramentas ou acessórios para o seu carro? Confira as melhores ofertas na Shopee →",
       affiliateLink: "https://s.shopee.com.br/AAFSeDbohx"
@@ -43,12 +41,11 @@
       precoLabel: "Preço do m³ do GNV (R$)",
       precoPlaceholder: "Ex: 4.50",
       gastoEnergiaLabel: "Gasto com gás GNV",
-      custos: { oleo: 0.025, pneus: 0.04, mecanica: 0.07, taxas: 0.05 },
+      custos: { oleo: 0.025, pneus: 0.04, mecanica: 0.07 },
       custoLabels: {
         oleo: "Óleo / Filtro (R$/km)",
         pneus: "Pneus (peso extra do cilindro) (R$/km)",
-        mecanica: "Mecânica (velas, cabos, filtros de gás) (R$/km)",
-        taxas: "Taxas / Vistoria / IPVA (R$/km)"
+        mecanica: "Mecânica (velas, cabos, filtros de gás) (R$/km)"
       },
       affiliateText: "🚗 Precisando de peças, ferramentas ou acessórios para o seu carro? Confira as melhores ofertas na Shopee →",
       affiliateLink: "https://s.shopee.com.br/AAFSeDbohx"
@@ -59,12 +56,11 @@
       precoLabel: "Preço do kWh da Energia (R$)",
       precoPlaceholder: "Ex: 0.95",
       gastoEnergiaLabel: "Gasto com eletricidade",
-      custos: { oleo: 0.00, pneus: 0.05, mecanica: 0.02, taxas: 0.03 },
+      custos: { oleo: 0.00, pneus: 0.05, mecanica: 0.02 },
       custoLabels: {
         oleo: "Óleo / Filtro (não se aplica) (R$/km)",
         pneus: "Pneus (R$/km)",
-        mecanica: "Mecânica Geral (freio regenerativo) (R$/km)",
-        taxas: "Taxas / Seguro / Licenciamento (R$/km)"
+        mecanica: "Mecânica Geral (freio regenerativo) (R$/km)"
       },
       affiliateText: "🚗 Precisando de peças, ferramentas ou acessórios para o seu carro? Confira as melhores ofertas na Shopee →",
       affiliateLink: "https://s.shopee.com.br/AAFSeDbohx"
@@ -94,11 +90,9 @@
     custoOleo: document.getElementById("custoOleo"),
     custoPneus: document.getElementById("custoPneus"),
     custoMecanica: document.getElementById("custoMecanica"),
-    custoTaxas: document.getElementById("custoTaxas"),
     labelOleo: document.getElementById("labelOleo"),
     labelPneus: document.getElementById("labelPneus"),
     labelMecanica: document.getElementById("labelMecanica"),
-    labelTaxas: document.getElementById("labelTaxas"),
   
     accordionToggle: document.getElementById("accordionToggle"),
     accordionBody: document.getElementById("accordionBody"),
@@ -145,13 +139,13 @@ function applyProfile() {
 
   // Atualiza com segurança o texto das labels preservando o ícone FontAwesome original
   if (el.labelConsumo) {
-    el.labelConsumo.innerHTML = `<i class="fas fa-gas-pump"></i> ${cfg.consumoLabel}`;
+    el.labelConsumo.innerHTML = `<span><i class="fas fa-gas-pump mr-1"></i> ${cfg.consumoLabel}</span>`;
   }
   
   el.consumo.value = cfg.consumoDefault;
   
   if (el.labelPreco) {
-    el.labelPreco.innerHTML = `<i class="fas fa-coins"></i> ${cfg.precoLabel}`;
+    el.labelPreco.innerHTML = `<span><i class="fas fa-coins mr-1"></i> ${cfg.precoLabel}</span>`;
   }
   
   el.precoUnidade.placeholder = cfg.precoPlaceholder;
@@ -160,13 +154,11 @@ function applyProfile() {
   el.custoOleo.value = cfg.custos.oleo;
   el.custoPneus.value = cfg.custos.pneus;
   el.custoMecanica.value = cfg.custos.mecanica;
-  el.custoTaxas.value = cfg.custos.taxas;
 
   // Atualiza as labels dos custos
   el.labelOleo.textContent = cfg.custoLabels.oleo;
   el.labelPneus.textContent = cfg.custoLabels.pneus;
   el.labelMecanica.textContent = cfg.custoLabels.mecanica;
-  el.labelTaxas.textContent = cfg.custoLabels.taxas;
 
   el.labelGastoEnergia.innerHTML =
     '<i class="fas fa-gas-pump" style="color:var(--amber);"></i> ' + cfg.gastoEnergiaLabel;
@@ -233,8 +225,7 @@ function applyProfile() {
     const custoOleoKm = parseFloat(el.custoOleo.value) || 0;
     const custoPneusKm = parseFloat(el.custoPneus.value) || 0;
     const custoMecanicaKm = parseFloat(el.custoMecanica.value) || 0;
-    const custoTaxasKm = parseFloat(el.custoTaxas.value) || 0;
-    const custoManutencaoPorKm = custoOleoKm + custoPneusKm + custoMecanicaKm + custoTaxasKm;
+    const custoManutencaoPorKm = custoOleoKm + custoPneusKm + custoMecanicaKm;
     const custoManutencaoTotal = custoManutencaoPorKm * km;
   
     const custoTotal = gastoEnergia + custoManutencaoTotal;
