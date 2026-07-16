@@ -65,6 +65,7 @@
     </section>
 
     <!-- FORMULÁRIO PRINCIPAL -->
+    <!-- FORMULÁRIO PRINCIPAL -->
     <section class="card p-5 space-y-5">
 
       <div>
@@ -77,17 +78,27 @@
         <input type="number" id="faturamentoBruto" inputmode="decimal" placeholder="Ex: 220" class="input-field">
       </div>
 
+      <!-- GRID DE CONSUMO E PREÇO AJUSTADO -->
       <div class="grid grid-cols-2 gap-4">
-        <div>
-          <label class="field-label" id="labelConsumo"><i class="fas fa-gas-pump"></i> Consumo Médio (KM/L)</label>
-          <input type="number" id="consumo" inputmode="decimal" class="input-field">
+        <div class="flex flex-col justify-between">
+          <label class="field-label mb-2 min-h-[40px] flex items-end" id="labelConsumo">
+            <span><i class="fas fa-gas-pump mr-1"></i> Consumo Médio (KM/L)</span>
+          </label>
+          <input type="number" id="consumo" inputmode="decimal" class="input-field mt-auto">
         </div>
-        <div>
-          <label class="field-label" id="labelPreco"><i class="fas fa-coins"></i> Preço do Litro do Combustível (R$)</label>
-          <input type="number" id="precoUnidade" inputmode="decimal" placeholder="Ex: 5.89" class="input-field">
+        <div class="flex flex-col justify-between">
+          <label class="field-label mb-2 min-h-[40px] flex items-end" id="labelPreco">
+            <span><i class="fas fa-coins mr-1"></i> Preço do Litro do Combustível (R$)</span>
+          </label>
+          <input type="number" id="precoUnidade" inputmode="decimal" placeholder="Ex: 5.89" class="input-field mt-auto">
         </div>
       </div>
 
+      <div>
+        <label class="field-label"><i class="fas fa-bullseye"></i> Sua Meta de Ganho por KM (R$)</label>
+        <input type="number" step="0.01" id="metaPorKm" inputmode="decimal" value="1.95" class="input-field">
+      </div>
+      
       <div>
         <label class="field-label"><i class="fas fa-bullseye"></i> Sua Meta de Ganho por KM (R$)</label>
         <input type="number" step="0.01" id="metaPorKm" inputmode="decimal" value="1.95" class="input-field">

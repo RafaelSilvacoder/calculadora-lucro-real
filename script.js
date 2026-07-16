@@ -51,7 +51,7 @@
         taxas: "Taxas / Vistoria / IPVA (R$/km)"
       },
       affiliateText: "🚗 Precisando de peças, ferramentas ou acessórios para o seu carro? Confira as melhores ofertas na Shopee →",
-      affiliateLink: "hhttps://s.shopee.com.br/AAFSeDbohx"
+      affiliateLink: "https://s.shopee.com.br/AAFSeDbohx"
     },
     eletrico: {
       consumoLabel: "Consumo Médio (KM/kWh)",
@@ -82,9 +82,9 @@
     carroSubtabs: document.getElementById("carroSubtabs"),
     subtabBtns: document.querySelectorAll(".sub-tab-btn"),
   
-    // Alterado para focar no TextElement interno e blindar os ícones
-    labelConsumoText: document.getElementById("labelConsumoText"),
-    labelPrecoText: document.getElementById("labelPrecoText"),
+    // AJUSTADO: Aponta diretamente para as IDs reais que existem no HTML
+    labelConsumo: document.getElementById("labelConsumo"),
+    labelPreco: document.getElementById("labelPreco"),
     consumo: document.getElementById("consumo"),
     precoUnidade: document.getElementById("precoUnidade"),
     kmRodados: document.getElementById("kmRodados"),
@@ -140,24 +140,18 @@
   /* --------------------------------------------------------------------------
      applyProfile: aplica o perfil ativo em toda a interface
      -------------------------------------------------------------------------- */
-  /* --------------------------------------------------------------------------
-   applyProfile: aplica o perfil ativo em toda a interface
-   -------------------------------------------------------------------------- */
-/* --------------------------------------------------------------------------
-   applyProfile: aplica o perfil ativo em toda a interface
-   -------------------------------------------------------------------------- */
 function applyProfile() {
   const cfg = PROFILES[getActiveProfileKey()];
 
-  // Correção: Atualiza os textos usando labelConsumoText e labelPrecoText com segurança
-  if (el.labelConsumoText && el.labelConsumoText.lastChild) {
-    el.labelConsumoText.lastChild.textContent = " " + cfg.consumoLabel;
+  // Atualiza com segurança o texto das labels preservando o ícone FontAwesome original
+  if (el.labelConsumo) {
+    el.labelConsumo.innerHTML = `<i class="fas fa-gas-pump"></i> ${cfg.consumoLabel}`;
   }
   
   el.consumo.value = cfg.consumoDefault;
   
-  if (el.labelPrecoText && el.labelPrecoText.lastChild) {
-    el.labelPrecoText.lastChild.textContent = " " + cfg.precoLabel;
+  if (el.labelPreco) {
+    el.labelPreco.innerHTML = `<i class="fas fa-coins"></i> ${cfg.precoLabel}`;
   }
   
   el.precoUnidade.placeholder = cfg.precoPlaceholder;
@@ -177,8 +171,28 @@ function applyProfile() {
   el.labelGastoEnergia.innerHTML =
     '<i class="fas fa-gas-pump" style="color:var(--amber);"></i> ' + cfg.gastoEnergiaLabel;
 
+  // Gerencia a visibilidade da sub-aba de combustível do carro
+  if (currentVehicle === "carro") {
+    el.carroSubtabs.classList.add("open");
+  } else {
+    el.carroSubtabs.classList.remove("open");
+  }
+
   el.resultsPanel.classList.add("hidden");
 }
+
+  /* --------------------------------------------------------------------------
+     Alterna as Abas de Veículos Principais (Moto, Carro, Elétrico)
+     -------------------------------------------------------------------------- */
+  el.tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      el.tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      currentVehicle = tab.dataset.vehicle;
+      applyProfile();
+    });
+  });
+
   /* --------------------------------------------------------------------------
      Alterna entre Gasolina/Flex e GNV
      -------------------------------------------------------------------------- */
