@@ -18,7 +18,7 @@
         mecanica: "Relação / Mecânica (R$/km)"
       },
       affiliateText: "🔧 Hora de dar aquela geral na máquina? Confira motopeças em promoção na Shopee com desconto →",
-      affiliateLink: "https://s.shopee.com.br/40epImbWXq"
+      affiliateLink: "https://s.shopee.com.br/9KgUHzRFqN"
     },
     carro_gasolina: {
       consumoLabel: "Consumo Médio (KM/L)",
@@ -63,7 +63,7 @@
         mecanica: "Mecânica Geral (freio regenerativo) (R$/km)"
       },
       affiliateText: "🚗 Precisando de peças, ferramentas ou acessórios para o seu carro? Confira as melhores ofertas na Shopee →",
-      affiliateLink: "https://s.shopee.com.br/AAFSeDbohx"
+      affiliateLink: "https://s.shopee.com.br/BSFN5jphS"
     }
   };
   
