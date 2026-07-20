@@ -4,12 +4,13 @@
    de consumo pré-preenchidos, placeholders e custos ocultos por KM.
    "carro" tem dois perfis (gasolina/gnv) escolhidos pelas sub-abas.
    ========================================================================== */
-   const PROFILES = {
+const PROFILES = {
     moto: {
       consumoLabel: "Consumo Médio (KM/L)",
       consumoDefault: "35",
       precoLabel: "Preço do Litro do Combustível (R$)",
       precoPlaceholder: "Ex: 5.89",
+      precoDefault: "5.89", // Valor padrão inicial caso nunca tenha sido salvo
       gastoEnergiaLabel: "Gasto com combustível",
       custos: { oleo: 0.04, pneus: 0.02, mecanica: 0.012 },
       custoLabels: {
@@ -25,6 +26,7 @@
       consumoDefault: "10",
       precoLabel: "Preço do Litro do Combustível (R$)",
       precoPlaceholder: "Ex: 5.89",
+      precoDefault: "5.89", // Valor padrão inicial caso nunca tenha sido salvo
       gastoEnergiaLabel: "Gasto com combustível",
       custos: { oleo: 0.025, pneus: 0.035, mecanica: 0.06 },
       custoLabels: {
@@ -40,6 +42,7 @@
       consumoDefault: "12",
       precoLabel: "Preço do m³ do GNV (R$)",
       precoPlaceholder: "Ex: 4.50",
+      precoDefault: "4.50", // Valor padrão inicial caso nunca tenha sido salvo
       gastoEnergiaLabel: "Gasto com gás GNV",
       custos: { oleo: 0.025, pneus: 0.04, mecanica: 0.07 },
       custoLabels: {
@@ -55,6 +58,7 @@
       consumoDefault: "6",
       precoLabel: "Preço do kWh da Energia (R$)",
       precoPlaceholder: "Ex: 0.95",
+      precoDefault: "0.95", // Valor padrão inicial caso nunca tenha sido salvo
       gastoEnergiaLabel: "Gasto com eletricidade",
       custos: { oleo: 0.00, pneus: 0.05, mecanica: 0.02 },
       custoLabels: {
@@ -78,7 +82,6 @@
     carroSubtabs: document.getElementById("carroSubtabs"),
     subtabBtns: document.querySelectorAll(".sub-tab-btn"),
   
-    // AJUSTADO: Aponta diretamente para as IDs reais que existem no HTML
     labelConsumo: document.getElementById("labelConsumo"),
     labelPreco: document.getElementById("labelPreco"),
     consumo: document.getElementById("consumo"),
@@ -135,20 +138,27 @@
      applyProfile: aplica o perfil ativo em toda a interface
      -------------------------------------------------------------------------- */
 function applyProfile() {
-  const cfg = PROFILES[getActiveProfileKey()];
+  const profileKey = getActiveProfileKey();
+  const cfg = PROFILES[profileKey];
 
   // Atualiza com segurança o texto das labels preservando o ícone FontAwesome original
   if (el.labelConsumo) {
     el.labelConsumo.innerHTML = `<span><i class="fas fa-gas-pump mr-1"></i> ${cfg.consumoLabel}</span>`;
   }
   
-  el.consumo.value = cfg.consumoDefault;
+  // 🔥 CORRIGIDO: Agora busca se há consumo personalizado salvo para este perfil específico
+  const consumoSalvo = localStorage.getItem('consumo_' + profileKey);
+  el.consumo.value = consumoSalvo ? consumoSalvo : cfg.consumoDefault;
   
   if (el.labelPreco) {
     el.labelPreco.innerHTML = `<span><i class="fas fa-coins mr-1"></i> ${cfg.precoLabel}</span>`;
   }
   
   el.precoUnidade.placeholder = cfg.precoPlaceholder;
+
+  // 🔥 CORRIGIDO: Busca se há preço personalizado salvo para este perfil específico
+  const precoSalvo = localStorage.getItem('preco_' + profileKey);
+  el.precoUnidade.value = precoSalvo ? precoSalvo : cfg.precoDefault;
 
   // Preenche as caixas de custos ocultos com os valores predefinidos do perfil
   el.custoOleo.value = cfg.custos.oleo;
@@ -219,6 +229,11 @@ function applyProfile() {
       alert("Preencha os KM rodados e o consumo médio para calcular.");
       return;
     }
+
+    // 🔥 CORRIGIDO: Salva permanentemente as customizações de consumo e preço do veículo atual ao clicar em calcular
+    const profileKey = getActiveProfileKey();
+    localStorage.setItem('consumo_' + profileKey, consumo);
+    localStorage.setItem('preco_' + profileKey, precoUnidade);
   
     const gastoEnergia = (km / consumo) * precoUnidade;
   
@@ -287,4 +302,5 @@ function applyProfile() {
   
   el.btnCalcular.addEventListener("click", calcularLucro);
   
+  // 🔥 CORRIGIDO: Garante a checagem da memória local logo na inicialização da página
   applyProfile();
