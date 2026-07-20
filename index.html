@@ -1,198 +1,234 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora do Lucro Real</title>
-<!-- PWA: manifest + ícones + cor de tema (necessário para instalar e para empacotar via PWABuilder) -->
-<link rel="manifest" href="manifest.json">
-
-<!-- Tailwind CSS via CDN (layout: grid, flex, espaçamento, bordas) -->
-<script src="https://cdn.tailwindcss.com"></script>
-
-<!-- Font Awesome via CDN (ícones) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<!-- Fontes: Rajdhani para números/painel (estilo velocímetro), Inter para texto -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Lucro Real - Motoristas e Entregadores</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuração PWA (Opcional caso adicione o manifest depois) -->
+    <meta name="theme-color" content="#121214">
 </head>
-<body class="min-h-screen pb-16">
+<body class="bg-[#121214] text-gray-100 font-sans min-h-screen flex flex-col items-center p-4">
 
-  <!-- HEADER -->
-  <header class="px-5 pt-8 pb-5 max-w-lg mx-auto">
-    <div class="flex items-center gap-3">
-      <div class="w-11 h-11 card flex items-center justify-center text-xl" style="color:var(--amber);">
-        <i class="fas fa-gauge-high"></i>
-      </div>
-      <div>
-        <h1 class="font-dash app-title text-2xl font-bold tracking-wide leading-none">CALCULADORA DO<br><span style="color:var(--amber);">LUCRO REAL</span></h1>
-      </div>
+    <!-- Container Principal do App -->
+    <div class="w-full max-w-md bg-[#1a1a1e] border border-gray-800 rounded-2xl p-5 shadow-2xl">
+        
+        <h1 class="text-xs font-bold tracking-widest text-gray-400 uppercase mb-4 text-center">Seu Veículo de Trabalho</h1>
+
+        <!-- Seleção de Veículos -->
+        <div class="grid grid-cols-3 gap-3 mb-6">
+            <button type="button" onclick="configurarTela('moto')" id="btnMoto" class="btn-veiculo flex flex-col items-center justify-center p-3 rounded-xl border border-gray-700 bg-amber-500 text-black font-semibold transition-all">
+                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <span class="text-xs">Moto</span>
+            </button>
+            <button type="button" onclick="configurarTela('carro')" id="btnCarro" class="btn-veiculo flex flex-col items-center justify-center p-3 rounded-xl border border-gray-700 bg-[#26262b] text-gray-300 font-semibold transition-all">
+                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10h1m10 0h1m-1 0H4m14 0h3v-3.5a1 1 0 00-.3-.7l-2-2a1 1 0 00-.7-.3H17v6.5z"/></svg>
+                <span class="text-xs">Carro</span>
+            </button>
+            <button type="button" onclick="configurarTela('eletrico')" id="btnEletrico" class="btn-veiculo flex flex-col items-center justify-center p-3 rounded-xl border border-gray-700 bg-[#26262b] text-gray-300 font-semibold transition-all">
+                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <span class="text-xs">Elétrico</span>
+            </button>
+        </div>
+
+        <!-- Formulário de Cálculo -->
+        <form id="calcForm" class="space-y-4">
+            
+            <!-- KM Rodados -->
+            <div>
+                <label class="block text-xs font-semibold text-amber-500 uppercase tracking-wider mb-1">⚠️ KM Rodados no Dia</label>
+                <input type="number" step="any" id="kmRodados" placeholder="Ex: 180" required class="w-full bg-[#121214] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500">
+            </div>
+
+            <!-- Faturamento Bruto -->
+            <div>
+                <label class="block text-xs font-semibold text-amber-500 uppercase tracking-wider mb-1">💰 Faturamento Bruto do Dia (R$)</label>
+                <input type="number" step="any" id="faturamento" placeholder="Ex: 220" required class="w-full bg-[#121214] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500">
+            </div>
+
+            <!-- Consumo Médio e Preço (Alinhados perfeitamente) -->
+            <div class="grid grid-cols-2 gap-4 items-end">
+                <div class="flex flex-col justify-end h-full">
+                    <label id="labelConsumo" class="block text-xs font-semibold text-amber-500 uppercase tracking-wider mb-1 min-h-[32px] flex items-end">Consumo Médio (KM/L)</label>
+                    <input type="number" step="any" id="consumo" placeholder="Ex: 35" required class="w-full bg-[#121214] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500">
+                </div>
+                <div class="flex flex-col justify-end h-full">
+                    <label id="labelPreco" class="block text-xs font-semibold text-amber-500 uppercase tracking-wider mb-1 min-h-[32px] flex items-end">Preço do Litro do Combustível (R$)</label>
+                    <input type="number" step="any" id="precoCombustivel" placeholder="Ex: 5.89" required class="w-full bg-[#121214] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500">
+                </div>
+            </div>
+
+            <!-- Meta de Ganho por KM -->
+            <div>
+                <label class="block text-xs font-semibold text-amber-500 uppercase tracking-wider mb-1">🎯 Sua Meta de Ganho por KM (R$)</label>
+                <input type="number" step="any" id="metaGanho" value="1.95" required class="w-full bg-[#121214] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500">
+            </div>
+
+            <!-- Abrir o Capô (Custos Ocultos - Ocultos por padrão) -->
+            <details class="bg-[#121214] border border-gray-800 rounded-xl p-3 text-sm">
+                <summary class="cursor-pointer font-semibold text-amber-500 flex items-center justify-between">
+                    <span>🛢️ Abrir o Capô: Ajustar Custos Ocultos</span>
+                </summary>
+                <div class="mt-3 space-y-3 pt-2 border-t border-gray-800">
+                    <div>
+                        <label class="block text-[11px] text-gray-400">Óleo / Lubrificação por KM (R$)</label>
+                        <input type="number" step="any" id="cfgOleo" class="w-full bg-[#1a1a1e] border border-gray-700 rounded-lg p-2 text-white text-xs">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-gray-400">Pneus por KM (R$)</label>
+                        <input type="number" step="any" id="cfgPneus" class="w-full bg-[#1a1a1e] border border-gray-700 rounded-lg p-2 text-white text-xs">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-gray-400">Manutenção / Mecânica por KM (R$)</label>
+                        <input type="number" step="any" id="cfgMecanica" class="w-full bg-[#1a1a1e] border border-gray-700 rounded-lg p-2 text-white text-xs">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-gray-400">Taxas e Depreciação por KM (R$)</label>
+                        <input type="number" step="any" id="cfgTaxas" class="w-full bg-[#1a1a1e] border border-gray-700 rounded-lg p-2 text-white text-xs">
+                    </div>
+                </div>
+            </details>
+
+            <!-- Botão de Calcular -->
+            <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold py-3.5 rounded-xl transition-all shadow-lg uppercase tracking-wider text-sm">
+                Calcular Lucro Real
+            </button>
+        </form>
+
+        <!-- Seção de Resultados (Oculta até calcular) -->
+        <div id="secaoResultado" class="hidden mt-6 pt-5 border-t border-gray-800 space-y-3">
+            <div class="bg-[#121214] p-4 rounded-xl border border-gray-800 flex justify-between items-center">
+                <span class="text-xs text-gray-400">Custo Total por KM:</span>
+                <span id="resultadoCustoKm" class="text-lg font-bold text-white">R$ 0,00</span>
+            </div>
+            <div class="bg-[#121214] p-4 rounded-xl border border-gray-800 flex justify-between items-center">
+                <span class="text-xs text-gray-400">Lucro Líquido Real:</span>
+                <span id="resultadoLucroReal" class="text-xl font-extrabold text-amber-500">R$ 0,00</span>
+            </div>
+            
+            <!-- Painel de Metas -->
+            <div id="painelMeta" class="p-4 rounded-xl text-xs"></div>
+        </div>
+
+        <!-- Rodapé com Link de Afiliado Shopee -->
+        <div class="mt-8 pt-4 border-t border-gray-800 text-center">
+            <a id="linkAfiliado" href="https://s.shopee.com.br/40epImbWXq" target="_blank" class="text-[11px] text-gray-500 hover:text-amber-500 transition-colors underline block">
+                🛒 Equipamentos e Acessórios Recomendados para Pista
+            </a>
+            <p class="text-[10px] text-gray-600 mt-1">Calculadora de Lucro Real - Projeto Acadêmico</p>
+        </div>
+
     </div>
-    <div class="road-divider mt-4 mb-3 rounded-full"></div>
-    <p class="app-subtitle text-sm">Descubra quanto sobra de verdade no seu bolso e saiba na hora se a corrida vale a pena.</p>
-  </header>
 
-  <main class="px-5 max-w-lg mx-auto space-y-6">
+    <!-- JavaScript com Memória Local (localStorage) e Lógica de Veículos -->
+    <script>
+        const defaults = {
+            moto: { consumo: 35, oleo: 0.02, pneus: 0.01, mecanica: 0.03, taxas: 0.01, link: "https://s.shopee.com.br/40epImbWXq" },
+            carro: { consumo: 10, oleo: 0.01, pneus: 0.02, mecanica: 0.05, taxas: 0.03, link: "https://s.shopee.com.br/AAFSeDbohx" },
+            eletrico: { consumo: 6, oleo: 0.00, pneus: 0.03, mecanica: 0.02, taxas: 0.03, link: "https://s.shopee.com.br/AAFSeDbohx" }
+        };
 
-    <!-- SELETOR DE VEÍCULO -->
-    <section class="card p-5">
-      <p class="section-eyebrow text-xs uppercase tracking-widest mb-3 font-bold">Seu veículo de trabalho</p>
-      <!-- w-full adicionado para garantir largura total estável no mobile -->
-      <div class="grid grid-cols-3 gap-2 w-full" id="vehicleTabs">
-        <button type="button" data-vehicle="moto" class="tab-btn active">
-          <i class="fas fa-motorcycle"></i> Moto
-        </button>
-        <button type="button" data-vehicle="carro" class="tab-btn">
-          <i class="fas fa-car"></i> Carro
-        </button>
-        <button type="button" data-vehicle="eletrico" class="tab-btn">
-          <i class="fas fa-bolt"></i> Elétrico
-        </button>
-      </div>
+        let veiculoAtual = 'moto';
 
-      <!-- SUB-ABAS -->
-      <div class="subtab-wrap flex gap-2" id="carroSubtabs">
-        <button type="button" data-subfuel="gasolina" class="sub-tab-btn active">
-          <i class="fas fa-gas-pump mr-1"></i> Gasolina/Flex
-        </button>
-        <button type="button" data-subfuel="gnv" class="sub-tab-btn">
-          <i class="fas fa-fire mr-1"></i> GNV
-        </button>
-      </div>
-    </section>
+        // Carrega valores salvos ao abrir o app
+        window.addEventListener('DOMContentLoaded', () => {
+            carregarDadosVeiculo(veiculoAtual);
+        });
 
-    <!-- FORMULÁRIO PRINCIPAL -->
-    <section class="card p-5 space-y-5">
+        function configurarTela(chave) {
+            veiculoAtual = chave;
 
-      <div>
-        <label class="field-label"><i class="fas fa-road"></i> KM Rodados no dia</label>
-        <input type="number" id="kmRodados" inputmode="decimal" placeholder="Ex: 180" class="input-field">
-      </div>
+            // Altera o estilo visual dos botões de veículos
+            document.querySelectorAll('.btn-veiculo').forEach(btn => {
+                btn.classList.remove('bg-amber-500', 'text-black');
+                btn.classList.add('bg-[#26262b]', 'text-gray-300');
+            });
+            
+            const btnAtivo = document.getElementById(chave === 'moto' ? 'btnMoto' : chave === 'carro' ? 'btnCarro' : 'btnEletrico');
+            btnAtivo.classList.remove('bg-[#26262b]', 'text-gray-300');
+            btnAtivo.classList.add('bg-amber-500', 'text-black');
 
-      <div>
-        <label class="field-label"><i class="fas fa-sack-dollar"></i> Faturamento Bruto do dia (R$)</label>
-        <input type="number" id="faturamentoBruto" inputmode="decimal" placeholder="Ex: 220" class="input-field">
-      </div>
+            // Ajusta textos de consumo/preço
+            const labelConsumo = document.getElementById('labelConsumo');
+            const labelPreco = document.getElementById('labelPreco');
 
-      <!-- GRID DE CONSUMO E PREÇO AJUSTADO -->
-      <div class="grid grid-cols-2 gap-4">
-        <div class="flex flex-col justify-between">
-          <label class="field-label mb-2 min-h-[40px] flex items-end" id="labelConsumo">
-            <span><i class="fas fa-gas-pump mr-1"></i> Consumo Médio (KM/L)</span>
-          </label>
-          <input type="number" id="consumo" inputmode="decimal" class="input-field mt-auto">
-        </div>
-        <div class="flex flex-col justify-between">
-          <label class="field-label mb-2 min-h-[40px] flex items-end" id="labelPreco">
-            <span><i class="fas fa-coins mr-1"></i> Preço do Litro do Combustível (R$)</span>
-          </label>
-          <input type="number" id="precoUnidade" inputmode="decimal" placeholder="Ex: 5.89" class="input-field mt-auto">
-        </div>
-      </div>
+            if (chave === 'eletrico') {
+                labelConsumo.innerHTML = 'Consumo Médio (KM/KWH)';
+                labelPreco.innerHTML = 'Preço do KWH da Energia (R$)';
+            } else {
+                labelConsumo.innerHTML = 'Consumo Médio (KM/L)';
+                labelPreco.innerHTML = 'Preço do Litro do Combustível (R$)';
+            }
 
-      <div>
-        <label class="field-label"><i class="fas fa-bullseye"></i> Sua Meta de Ganho por KM (R$)</label>
-        <input type="number" step="0.01" id="metaPorKm" inputmode="decimal" value="1.95" class="input-field">
-      </div>
+            // Atualiza link de afiliado correspondente
+            document.getElementById('linkAfiliado').href = defaults[chave].link;
 
-      <!-- ACCORDION "ABRIR O CAPÔ" -->
-      <div class="rounded-xl overflow-hidden" style="border:1px solid var(--line);">
-        <button type="button" id="accordionToggle" class="accordion-toggle w-full flex items-center justify-between px-4 py-3.5">
-          <span class="flex items-center gap-2"><i class="fas fa-oil-can" style="color:var(--amber);"></i> Abrir o Capô: Ajustar Custos Ocultos</span>
-          <i class="fas fa-chevron-down chevron"></i>
-        </button>
-        <div class="accordion-body" id="accordionBody">
-          <div class="p-4 space-y-4">
-            <p class="accordion-hint -mt-1 mb-1">Valores médios calibrados por veículo. Ajuste se a sua realidade for diferente.</p>
+            carregarDadosVeiculo(chave);
+        }
 
-            <div>
-              <label class="field-label-sm" id="labelOleo">Óleo / Filtro (R$/km)</label>
-              <input type="number" step="0.001" id="custoOleo" class="input-field input-field-sm">
-            </div>
-            <div>
-              <label class="field-label-sm" id="labelPneus">Pneus (R$/km)</label>
-              <input type="number" step="0.001" id="custoPneus" class="input-field input-field-sm">
-            </div>
-            <div>
-              <label class="field-label-sm" id="labelMecanica">Mecânica Geral (R$/km)</label>
-              <input type="number" step="0.001" id="custoMecanica" class="input-field input-field-sm">
-            </div>
-          </div>
-        </div>
-      </div>
+        function carregarDadosVeiculo(chave) {
+            // Pega o consumo salvo na memória ou usa o padrão
+            const consumoSalvo = localStorage.getItem('consumo_' + chave);
+            const precoSalvo = localStorage.getItem('preco_' + chave);
 
-      <button type="button" id="btnCalcular" class="btn-calc w-full rounded-xl py-4 font-dash text-lg font-extrabold flex items-center justify-center gap-2">
-        <i class="fas fa-calculator"></i> CALCULAR LUCRO REAL
-      </button>
-    </section>
+            document.getElementById('consumo').value = consumoSalvo ? consumoSalvo : defaults[chave].consumo;
+            document.getElementById('precoCombustivel').value = precoSalvo ? precoSalvo : (chave === 'eletrico' ? '0.95' : '5.89');
 
-    <!-- PAINEL DE RESULTADOS -->
-    <section id="resultsPanel" class="hidden space-y-4">
-      <div class="card p-5 space-y-5">
+            // Preenche os campos ocultos do capô
+            document.getElementById('cfgOleo').value = defaults[chave].oleo;
+            document.getElementById('cfgPneus').value = defaults[chave].pneus;
+            document.getElementById('cfgMecanica').value = defaults[chave].mecanica;
+            document.getElementById('cfgTaxas').value = defaults[chave].taxas;
+        }
 
-        <div class="flex flex-col items-center">
-          <div class="gauge" id="gaugeEl">
-            <div class="gauge-inner">
-              <p class="gauge-label">Lucro líquido real</p>
-              <p class="font-dash gauge-value" id="lucroValor">R$ 0,00</p>
-            </div>
-          </div>
-        </div>
+        // Ação do Cálculo
+        document.getElementById('calcForm').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        <div class="road-divider rounded-full"></div>
+            const km = parseFloat(document.getElementById('kmRodados').value) || 0;
+            const faturamento = parseFloat(document.getElementById('faturamento').value) || 0;
+            const consumo = parseFloat(document.getElementById('consumo').value) || 0;
+            const precoCombustivel = parseFloat(document.getElementById('precoCombustivel').value) || 0;
+            const meta = parseFloat(document.getElementById('metaGanho').value) || 0;
 
-        <div class="space-y-3">
-          <div class="result-row card-inset px-4 py-3.5">
-            <span class="result-row-label" id="labelGastoEnergia"><i class="fas fa-gas-pump" style="color:var(--amber);"></i> Gasto com combustível</span>
-            <span class="font-dash result-row-value" id="valGastoEnergia">R$ 0,00</span>
-          </div>
-          <div class="result-row card-inset px-4 py-3.5">
-            <span class="result-row-label"><i class="fas fa-screwdriver-wrench" style="color:var(--amber);"></i> Manutenção oculta (desgaste)</span>
-            <span class="font-dash result-row-value" id="valManutencao">R$ 0,00</span>
-          </div>
-        </div>
+            const cOleo = parseFloat(document.getElementById('cfgOleo').value) || 0;
+            const cPneus = parseFloat(document.getElementById('cfgPneus').value) || 0;
+            const cMecanica = parseFloat(document.getElementById('cfgMecanica').value) || 0;
+            const cTaxas = parseFloat(document.getElementById('cfgTaxas').value) || 0;
 
-        <div class="grid grid-cols-2 gap-4">
-          <div class="card-inset px-3 py-3.5 text-center">
-            <p class="indicator-label">Custo real / KM</p>
-            <p class="font-dash text-lg font-bold" style="color:var(--text-primary);" id="valCustoKm">R$ 0,00</p>
-          </div>
-          <div class="card-inset px-3 py-3.5 text-center">
-            <p class="indicator-label">Ganho bruto / KM</p>
-            <p class="font-dash text-lg font-bold" style="color:var(--text-primary);" id="valGanhoBrutoKm">R$ 0,00</p>
-          </div>
-        </div>
-      </div>
+            // Salva na memória do celular do usuário para as próximas vezes
+            localStorage.setItem('consumo_' + veiculoAtual, consumo);
+            localStorage.setItem('preco_' + veiculoAtual, precoCombustivel);
 
-      <!-- ALERTA / CONFIRMAÇÃO DE META -->
-      <div id="metaAlertCard" class="hidden p-4"></div>
+            if (km === 0 || consumo === 0) {
+                alert("Por favor, preencha os campos corretamente.");
+                return;
+            }
 
-      <!-- CARD DE MONETIZAÇÃO / AFILIADOS -->
-      <a href="#" target="_blank" rel="noopener" id="affiliateCard" class="affiliate-card block p-4">
-        <p class="text-sm leading-snug" id="affiliateText"></p>
-        <span class="inline-flex items-center gap-1 text-sm mt-2">Ver ofertas <i class="fas fa-arrow-right"></i></span>
-      </a>
-    </section>
+            const custoCombustivelPorKm = precoCombustivel / consumo;
+            const custoOcultoPorKm = cOleo + cPneus + cMecanica + cTaxas;
+            const custoTotalPorKm = custoCombustivelPorKm + custoOcultoPorKm;
+            const custoTotalDia = custoTotalPorKm * km;
+            
+            const lucroLiquido = faturamento - custoTotalDia;
+            const ganhoLiquidoPorKm = lucroLiquido / km;
 
-  </main>
+            // Exibe resultados
+            document.getElementById('resultadoCustoKm').innerText = `R$ ${custoTotalPorKm.toFixed(2)}`;
+            document.getElementById('resultadoLucroReal').innerText = `R$ ${lucroLiquido.toFixed(2)}`;
 
-  <footer class="max-w-lg mx-auto px-5 mt-10 text-center">
-    <div class="road-divider rounded-full mb-4"></div>
-    <p class="text-xs" style="color:var(--text-muted);">Desenvolvido por Rafael Silva.</p>
-  </footer>
+            const painelMeta = document.getElementById('painelMeta');
+            if (ganhoLiquidoPorKm >= meta) {
+                painelMeta.className = "p-4 rounded-xl bg-green-950/50 border border-green-600 text-green-300 text-xs";
+                painelMeta.innerHTML = `<strong>Meta Atingida! 🎉</strong> Ganho líquido de <strong>R$ ${ganhoLiquidoPorKm.toFixed(2)} por KM</strong>. Parabéns!`;
+            } else {
+                painelMeta.className = "p-4 rounded-xl bg-red-950/50 border border-red-600 text-red-300 text-xs";
+                painelMeta.innerHTML = `<strong>Abaixo da Meta! ⚠️</strong> Ganho líquido de <strong>R$ ${ganhoLiquidoPorKm.toFixed(2)} por KM</strong>. Cuidado com as corridas baratas!`;
+            }
 
-<script src="script.js"></script>
-
-<!-- Registra o Service Worker para funcionamento offline e instalação como app -->
-<script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("service-worker.js").catch(console.error);
-    });
-  }
-</script>
+            document.getElementById('secaoResultado').classList.remove('hidden');
+        });
+    </script>
 </body>
 </html>
