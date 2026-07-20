@@ -6,7 +6,6 @@
     <title>Calculadora de Lucro Real - Motoristas e Entregadores</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configuração PWA (Opcional caso adicione o manifest depois) -->
     <meta name="theme-color" content="#121214">
 </head>
 <body class="bg-[#121214] text-gray-100 font-sans min-h-screen flex flex-col items-center p-4">
@@ -16,10 +15,10 @@
         
         <h1 class="text-xs font-bold tracking-widest text-gray-400 uppercase mb-4 text-center">Seu Veículo de Trabalho</h1>
 
-        <!-- Seleção de Veículos -->
+        <!-- Seleção de Veículos com Ícones Corrigidos -->
         <div class="grid grid-cols-3 gap-3 mb-6">
             <button type="button" onclick="configurarTela('moto')" id="btnMoto" class="btn-veiculo flex flex-col items-center justify-center p-3 rounded-xl border border-gray-700 bg-amber-500 text-black font-semibold transition-all">
-                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 16l-1-3h16l-1 3M6 16a2 2 0 100 4 2 2 0 000-4zm12 0a2 2 0 100 4 2 2 0 000-4zM6.5 13L9 6h6l2.5 7"/></svg>
                 <span class="text-xs">Moto</span>
             </button>
             <button type="button" onclick="configurarTela('carro')" id="btnCarro" class="btn-veiculo flex flex-col items-center justify-center p-3 rounded-xl border border-gray-700 bg-[#26262b] text-gray-300 font-semibold transition-all">
@@ -47,7 +46,7 @@
                 <input type="number" step="any" id="faturamento" placeholder="Ex: 220" required class="w-full bg-[#121214] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500">
             </div>
 
-            <!-- Consumo Médio e Preço (Alinhados perfeitamente) -->
+            <!-- Consumo Médio e Preço (Perfeitamente Alinhados) -->
             <div class="grid grid-cols-2 gap-4 items-end">
                 <div class="flex flex-col justify-end h-full">
                     <label id="labelConsumo" class="block text-xs font-semibold text-amber-500 uppercase tracking-wider mb-1 min-h-[32px] flex items-end">Consumo Médio (KM/L)</label>
@@ -65,7 +64,7 @@
                 <input type="number" step="any" id="metaGanho" value="1.95" required class="w-full bg-[#121214] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500">
             </div>
 
-            <!-- Abrir o Capô (Custos Ocultos - Ocultos por padrão) -->
+            <!-- Abrir o Capô (Custos Ocultos) -->
             <details class="bg-[#121214] border border-gray-800 rounded-xl p-3 text-sm">
                 <summary class="cursor-pointer font-semibold text-amber-500 flex items-center justify-between">
                     <span>🛢️ Abrir o Capô: Ajustar Custos Ocultos</span>
@@ -96,7 +95,7 @@
             </button>
         </form>
 
-        <!-- Seção de Resultados (Oculta até calcular) -->
+        <!-- Seção de Resultados -->
         <div id="secaoResultado" class="hidden mt-6 pt-5 border-t border-gray-800 space-y-3">
             <div class="bg-[#121214] p-4 rounded-xl border border-gray-800 flex justify-between items-center">
                 <span class="text-xs text-gray-400">Custo Total por KM:</span>
@@ -111,7 +110,7 @@
             <div id="painelMeta" class="p-4 rounded-xl text-xs"></div>
         </div>
 
-        <!-- Rodapé com Link de Afiliado Shopee -->
+        <!-- Rodapé -->
         <div class="mt-8 pt-4 border-t border-gray-800 text-center">
             <a id="linkAfiliado" href="https://s.shopee.com.br/40epImbWXq" target="_blank" class="text-[11px] text-gray-500 hover:text-amber-500 transition-colors underline block">
                 🛒 Equipamentos e Acessórios Recomendados para Pista
@@ -121,7 +120,7 @@
 
     </div>
 
-    <!-- JavaScript com Memória Local (localStorage) e Lógica de Veículos -->
+    <!-- Script Completo e Funcional -->
     <script>
         const defaults = {
             moto: { consumo: 35, oleo: 0.02, pneus: 0.01, mecanica: 0.03, taxas: 0.01, link: "https://s.shopee.com.br/40epImbWXq" },
@@ -168,14 +167,12 @@
         }
 
         function carregarDadosVeiculo(chave) {
-            // Pega o consumo salvo na memória ou usa o padrão
             const consumoSalvo = localStorage.getItem('consumo_' + chave);
             const precoSalvo = localStorage.getItem('preco_' + chave);
 
             document.getElementById('consumo').value = consumoSalvo ? consumoSalvo : defaults[chave].consumo;
             document.getElementById('precoCombustivel').value = precoSalvo ? precoSalvo : (chave === 'eletrico' ? '0.95' : '5.89');
 
-            // Preenche os campos ocultos do capô
             document.getElementById('cfgOleo').value = defaults[chave].oleo;
             document.getElementById('cfgPneus').value = defaults[chave].pneus;
             document.getElementById('cfgMecanica').value = defaults[chave].mecanica;
@@ -197,7 +194,7 @@
             const cMecanica = parseFloat(document.getElementById('cfgMecanica').value) || 0;
             const cTaxas = parseFloat(document.getElementById('cfgTaxas').value) || 0;
 
-            // Salva na memória do celular do usuário para as próximas vezes
+            // Salva na memória do celular do usuário
             localStorage.setItem('consumo_' + veiculoAtual, consumo);
             localStorage.setItem('preco_' + veiculoAtual, precoCombustivel);
 
